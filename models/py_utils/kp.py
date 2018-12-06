@@ -10,6 +10,7 @@ from .kp_utils import _sigmoid, _ae_loss, _regr_loss, _neg_loss
 from .kp_utils import make_tl_layer, make_br_layer, make_kp_layer
 from .kp_utils import make_pool_layer, make_unpool_layer
 from .kp_utils import make_merge_layer, make_inter_layer, make_cnv_layer
+from .visualize import visualize
 
 class kp_module(nn.Module):
     def __init__(
@@ -245,6 +246,11 @@ class kp(nn.Module):
                 inter = self.inters_[ind](inter) + self.cnvs_[ind](cnv)
                 inter = self.relu(inter)
                 inter = self.inters[ind](inter)
+        
+        if 'debug' in kwargs:
+            if kwargs['debug']:
+                visualize(image, tl_heat, br_heat)
+            del kwargs['debug']
 
         return self._decode(*outs[-6:], **kwargs)
 

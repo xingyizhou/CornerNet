@@ -64,7 +64,7 @@ def _rescale_dets(detections, ratios, borders, sizes):
 
 def kp_decode(nnet, images, K, ae_threshold=0.5, kernel=3, debug=False):
     detections = nnet.test(
-        [images], ae_threshold=ae_threshold, K=K, kernel=kernel)
+        [images], ae_threshold=ae_threshold, K=K, kernel=kernel, debug=debug)
     detections = detections.data.cpu().numpy()
     return detections
 
